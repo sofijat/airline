@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Dodaj let</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h3>Dodaj novi let</h3>
+                    <p:wizard backLabel="back" style="width: 500px">
+                        <p:tab title="Osnovno">
+                            <p:panel>
+                                <h:panelGrid columns="2" id="gri">
+                                    <h:outputText value="Polazni aerodrom:"/>
+                                    <p:selectOneMenu value="#{controller.lpolazni}" required="true" requiredMessage="Obavezno polje">
+                                        <p:ajax listener="#{controller.manjeGejtovaPolaz()}" update="pol"/>
+                                        <f:selectItems value="#{userController.svi_aerodromi}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Odredisni aerodrom:"/>
+                                    <p:selectOneMenu value="#{controller.lodredisni}" id="dva" required="true" requiredMessage="Obavezno polje">
+                                        <p:ajax listener="#{controller.manjeGejtovaOdred()}" update="odr"/>
+                                        <f:selectItems value="#{userController.svi_aerodromi}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Polazni gejt:"/>
+                                    <p:selectOneMenu value="#{controller.lgejtpolaz}" id="pol" required="true" requiredMessage="Obavezno polje">
+                                        <f:selectItems value="#{controller.odlazni_gejtovi}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Odredisni gejt:"/>
+                                    <p:selectOneMenu value="#{controller.lgejtodred}" id="odr" required="true" requiredMessage="Obavezno polje">
+                                        <f:selectItems value="#{controller.dolazni_gejtovi}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+
+                        <p:tab title="Vreme">
+                            <p:panel>
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Trajanje leta:"/>
+                                    <p:calendar value="#{controller.lduzina}" pattern="HH:mm" timeOnly="true" required="true" requiredMessage="Obavezno polje"/> 
+                                    <h:outputText value="Datum i vreme polaska:"/>
+                                    <p:calendar value="#{controller.ldatum}" pattern="yyyy-MM-dd HH:mm:ss" required="true" requiredMessage="Obavezno polje"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                        
+                        <p:tab title="Kompanija">
+                            <p:panel>
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Kompaniija:"/>
+                                    <p:selectOneMenu value="#{controller.lkompani}" required="true" requiredMessage="Obavezno polje">
+                                        <p:ajax listener="#{controller.smanjiNaOsnovuKomp()}" update="avi stj"/>
+                                        <f:selectItems value="#{userController.kompanis}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Avion:"/>
+                                    <p:selectOneMenu value="#{controller.lavion}" id="avi" required="true" requiredMessage="Obavezno polje">
+                                        <p:ajax listener="#{controller.smanjiPilote()}" update="kap"/>
+                                        <f:selectItems value="#{controller.dostupni_av}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Pilot:"/>
+                                    <p:selectOneMenu value="#{controller.lkapetan}" id="kap" required="true" requiredMessage="Obavezno polje">
+                                        <p:ajax listener="#{controller.smanjiKopilote()}" update="kopil"/>
+                                        <f:selectItems value="#{controller.dostupni_pil}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Kopilot:"/>
+                                    <p:selectOneMenu value="#{controller.lkopilot}" id="kopil" required="true" requiredMessage="Obavezno polje">
+                                        <f:selectItems value="#{controller.dostupni_pil}"/>
+                                    </p:selectOneMenu>
+                                    <h:outputText value="Stjuardese (min. 3):"/>
+                                    <p:selectCheckboxMenu id="stj" value="#{controller.izabrane_stj}" panelStyle="width:250px" label="Izaberi">
+                                        <f:selectItems value="#{controller.stjuardese}"/>
+                                    </p:selectCheckboxMenu>
+                                    <h:outputText value="Carter:"/>
+                                    <p:selectBooleanCheckbox value="#{controller.lcarter}"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                        
+                        <p:tab title="Pregled">
+                            <p:panel>
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Polazi aerodrom: "/>
+                                    <h:outputText value="#{controller.lpolazni}"/>
+                                    <h:outputText value="Odredisni aerodrom: "/>
+                                    <h:outputText value="#{controller.lodredisni}"/>
+                                    <h:outputText value="Polazi gejt "/>
+                                    <h:outputText value="#{controller.lgejtpolaz}"/>
+                                    <h:outputText value="Odredisni gejt: "/>
+                                    <h:outputText value="#{controller.lgejtodred}"/>
+                                    <h:outputText value="Trajanje leta: "/>
+                                    <h:outputText value="#{controller.lduzina}">
+                                        <f:convertDateTime pattern="HH:mm" timeZone="Etc/GMT-2"/>
+                                    </h:outputText>
+                                    <h:outputText value="Datum i vreme polaska: "/>
+                                    <h:outputText value="#{controller.ldatum}">
+                                        <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Etc/GMT-2"/>
+                                    </h:outputText>
+                                    <h:outputText value="Kompanija: "/>
+                                    <h:outputText value="#{controller.lkompani}"/>
+                                    <h:outputText value="Avion: "/>
+                                    <h:outputText value="#{controller.lavion}"/>
+                                    <h:outputText value="Kapetan: "/>
+                                    <h:outputText value="#{controller.lkapetan}"/>
+                                    <h:outputText value="Kopilot: "/>
+                                    <h:outputText value="#{controller.lkopilot}"/>
+                                    <h:outputText value="Carter:"/>
+                                    <h:outputText value="#{controller.lcarter}"/>
+                                </h:panelGrid>
+                                <br/>
+                                <p:commandButton value="Potvrdi" action="#{controller.dodajLet()}" update="messages" process="@this"/>
+                            </p:panel>
+                        </p:tab>
+                    </p:wizard>
+                </h:form>
+                <br/>
+                <p:messages id="messages" showDetail="true"/>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaAdmin()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

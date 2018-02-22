@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Rezultat pretrage</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h3>Rezultat pretrage</h3>
+                    <p:dataTable value="#{controller.filtrirano}" var="d" tableStyle="width:auto">
+                        <p:column headerText="Let">
+                            <center>
+                            <h:outputText value="#{d.polazniAer.grad}"/>-
+                            <h:outputText value="#{d.odredisniAer.grad}"/>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Datum i vreme">
+                            <center>
+                                <h:outputText value="#{d.datumPoletanja}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Etc/GMT-2"/>
+                                </h:outputText>
+                            </center>
+                        </p:column>
+                        <p:column headerText="Trajanje leta">
+                            <center>
+                            <h:outputText value="#{d.duzinaLeta}"/>h
+                            </center>
+                        </p:column>
+                        <p:column headerText="Broj slobodnih mesta">
+                            <center>
+                            <h:outputText value="#{d.brSlobodnihMesta}"/>
+                            </center>
+                        </p:column>
+                        <p:column>
+                            <center>
+                                <p:link value="rezervisi" outcome="#{controller.skoci(d.idLet)}" />
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                    <br/><br/>
+                </h:form>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Index" action="#{userController.skokNaIndeks()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

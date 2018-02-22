@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Registracija</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:panelGrid columns="2">
+                        Ime:
+                        <p:inputText value="#{userController.ime}" required="true" requiredMessage="Obavezno polje" placeholder="Name"/>
+                        Prezime:
+                        <p:inputText value="#{userController.prezime}" required="true" requiredMessage="Obavezno polje" placeholder="Surname"/>
+                        Pol:
+                        <p:selectOneMenu value="#{userController.pol}">
+                            <f:selectItem itemValue="M" itemLabel="M"/> 
+                            <f:selectItem itemValue="Z" itemLabel="Z"/> 
+                        </p:selectOneMenu>
+                        Datum rodjenja:
+                        <h:column>
+                            <p:calendar value="#{userController.datum}"/>
+                        </h:column>
+                        E-mail:                       
+                        <p:inputText value="#{userController.email}" required="true" requiredMessage="Obavezno polje" placeholder="E-mail address"/>
+                        Kompanija:
+                        <p:selectOneMenu value="#{userController.kompanija}" required="true" requiredMessage="Obavezno polje">
+                            <f:selectItems value="#{userController.kompanis}"/>
+                        </p:selectOneMenu>
+                        Radno mesto:
+                        <p:selectOneMenu value="#{userController.tip}" required="true" requiredMessage="Obavezno polje">
+                            <f:selectItem itemValue="0" itemLabel="pilot"/>
+                            <f:selectItem itemValue="1" itemLabel="stjuardesa"/>
+                            <f:selectItem itemValue="2" itemLabel="radnik"/>
+                        </p:selectOneMenu>
+                        Korisnicko ime:
+                        <p:inputText value="#{userController.username}" required="true" requiredMessage="Obavezno polje" placeholder="Username"/>
+                        Lozinka:
+                        <p:password value="#{userController.password}" required="true" requiredMessage="Obavezno polje" placeholder="Password" />
+                        Potvrdi lozinku:
+                        <p:password value="#{userController.potvrdipassword}" required="true" requiredMessage="Obavezno polje" placeholder="Password again" />
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton action="#{userController.registrujSe()}" value="Registruj se" icon="ui-icon-check" update=":messages @form"/>
+                    <br/><br/>                   
+                </h:form>
+                <p:messages id="messages" showDetail="true"/><br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Index" action="#{userController.skokNaIndeks()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

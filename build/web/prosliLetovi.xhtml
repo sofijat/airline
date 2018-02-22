@@ -1,0 +1,87 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Prosli letovi</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form id="form">
+                    <p:dataTable value="#{userController.prosli_letovi}" var="d" tableStyle="width:auto">
+                        <p:column headerText="Let">
+                            <p:outputLabel value="#{d.polazniAer.naziv}"/> -
+                            <p:outputLabel value="#{d.odredisniAer.naziv}"/>
+                        </p:column>
+                        <p:column headerText="Datum i vreme polaska">
+                            <h:outputText value="#{d.datumPoletanja}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Etc/GMT-2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <p:commandLink update=":form:letDetalj" oncomplete="PF('letDialog').show()" title="Detaljno">
+                                <h:outputText styleClass="ui-icon ui-icon-search" style="margin:0 auto;" />
+                                <f:setPropertyActionListener value="#{d}" target="#{controller.odabrani_let}"/>
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                    <br/>
+                    <p:dialog header="Detalji" widgetVar="letDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+                        <p:outputPanel id="letDetalj" style="text-align:center;">
+                            <p:panelGrid columns="2" rendered="#{not empty controller.odabrani_let}">
+                                Id:
+                                <h:outputText value="#{controller.odabrani_let.idLet}"/>
+                                Polazni aerodrom:
+                                <h:outputText value="#{controller.odabrani_let.polazniAer.naziv}"/>
+                                Odredisni aerodrom:
+                                <h:outputText value="#{controller.odabrani_let.odredisniAer.naziv}"/>
+                                Avion:
+                                <h:outputText value="#{controller.odabrani_let.idAvion.naziv}"/>
+                                Duzina leta:
+                                <h:outputText value="#{controller.odabrani_let.duzinaLeta}"/>
+                                Datum i vreme poletanja:
+                                <h:outputText value="#{controller.odabrani_let.datumPoletanja}">
+                                    <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Etc/GMT-2"/>
+                                </h:outputText>
+                                Planirano vreme:
+                                <h:outputText value="#{controller.odabrani_let.vremePlanirano}"/>
+                                Ocekivano vreme:
+                                <h:outputText value="#{controller.odabrani_let.vremeOcekivano}"/>
+                                Vreme sletanja:
+                                <h:outputText value="#{controller.odabrani_let.vremeSletanja}"/>
+                                Status:
+                                <h:outputText value="#{controller.odabrani_let.status}"/>
+                                Id kompanije:
+                                <h:outputText value="#{controller.odabrani_let.idKompan}"/>
+                                Id kapetana:
+                                <h:outputText value="#{controller.odabrani_let.idKapetan}"/>
+                                Id kopilota:
+                                <h:outputText value="#{controller.odabrani_let.idKopilot}"/>
+                                Odlazni gejt:
+                                <h:outputText value="#{controller.odabrani_let.gejtOdlaz}"/>
+                                Dolazni gejt:
+                                <h:outputText value="#{controller.odabrani_let.gejtDolaz}"/>
+                                Broj slobodnih mesta:
+                                <h:outputText value="#{controller.odabrani_let.brSlobodnihMesta}"/>
+                                Carter:
+                                <h:outputText value="#{controller.odabrani_let.carter}"/>
+                            </p:panelGrid>
+                        </p:outputPanel>
+                    </p:dialog>
+                </h:form>
+                <br/><br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaStjuard()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

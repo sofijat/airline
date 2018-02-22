@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Iznajmljivanje</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h3>Unesite kriterijume pretrage</h3>
+                    <p:panelGrid columns="2">
+                        Proizvodjac:
+                        <p:column>
+                            <p:selectOneMenu value="#{controller.filterProizvodjac}" id="proizv" required="true" requiredMessage="Obavezno polje">
+                                <p:ajax listener="#{controller.manjeTipova()}" update="model"/>
+                                <f:selectItem itemValue="0" itemLabel="Proizvodjac" noSelectionOption="true"/>
+                                <f:selectItems value="#{userController.proizvodjaci}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        Model:
+                        <p:column>
+                            <p:selectOneMenu value="#{controller.filterModel}" id="model">
+                                <f:selectItem itemValue="0" itemLabel="Model" noSelectionOption="true"/>
+                                <f:selectItems value="#{controller.tipovi}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        Min sedista:
+                        <p:column>
+                            <p:inputNumber value="#{controller.filterBrMesta}" placeholder="0" required="true" requiredMessage="Obavezno polje"/>
+                        </p:column>
+                        Od:
+                        <p:column>
+                            <p:calendar value="#{controller.filterOd}" required="true" requiredMessage="Obavezno polje"/>
+                        </p:column>
+                        Do:
+                        <p:column>
+                            <p:calendar value="#{controller.filterDo}" required="true" requiredMessage="Obavezno polje"/>
+                        </p:column>
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton value="Trazi" update=":messages :formica:tablica @form" actionListener="#{controller.nadji()}" ajax="false"/>
+                </h:form>
+                <br/>
+                <h:form rendered="#{not empty controller.filtriraniAvioni}" id="formica">
+                    <p:dataTable value="#{controller.filtriraniAvioni}" var="d" tableStyle="width:auto" id="tablica" >
+                        <p:column headerText="Naziv">
+                            <h:outputText value="#{d.naziv}"/>
+                        </p:column>
+                        <p:column headerText="Tip">
+                            <h:outputText value="#{d.idTtip.naziv}"/>
+                        </p:column>
+                        <p:column headerText="Broj sedista">
+                            <h:outputText value="#{d.idTtip.maxSedista}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Iznajmi" action="#{controller.iznajmi(d)}" update="messages @form"/>
+                        </p:column>
+                    </p:dataTable>
+                    <br/>
+                    Vrednost ponude: <br/>
+                    <p:inputNumber value="#{controller.evri}" required="true" requiredMessage="Obavezno polje"/> <span style="color: #cc0000">&euro;</span>
+                </h:form>
+                <br/>
+                <p:messages id="messages" showDetail="true"/>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaRadnik()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

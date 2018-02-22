@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Gost</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h3>Pretraga</h3>
+                    <p:panelGrid columns="2">
+                        Vrsta leta:
+                        <p:selectOneRadio value="#{controller.povratni}">
+                            <f:selectItem itemLabel="Povratni" itemValue="1" />
+                            <f:selectItem itemLabel="U jednom smeru" itemValue="0"/>
+                            <f:ajax render="kalend"/>
+                        </p:selectOneRadio>
+                        Polaziste:
+                        <p:inputText value="#{controller.polaziste}"/>
+                        Odrediste:
+                        <p:inputText value="#{controller.odrediste}"/>
+                        Datum polaska:
+                        <p:column>
+                            <p:calendar value="#{controller.datum_polaska}"/>
+                        </p:column>
+                        Datum povratka:
+                        <p:column>
+                            <p:calendar id="kalend" value="#{controller.datum_povratka}" disabled="#{controller.povratni==0}"/>
+                        </p:column>
+                        Broj osoba (starijih od 12):
+                        <p:inputNumber value="#{controller.broj_osoba}" required="true" emptyValue="1"/>
+                        Direktan let:
+                        <p:column>
+                            <p:selectBooleanCheckbox value="#{controller.direktan}"/>
+                        </p:column>
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton action="#{controller.pretraga()}" update=":messages" value="Pretraga"/>
+                </h:form>
+                <p:messages id="messages" showDetail="true"/>
+                <br/>
+                <h3>Danasnji letovi:</h3>
+                <p:dataTable value="#{controller.danasnji_letovi}" var="d" rendered="#{controller.prikaz}" style="width: 800px">
+                    <p:column headerText="Polaziste">
+                        <center>
+                            <h:outputText value="#{d.polazniAer.naziv}"/>, 
+                            <h:outputText value="#{d.polazniAer.grad}"/>,
+                            <h:outputText value="#{d.polazniAer.zemlja}"/>
+                        </center>
+                    </p:column>
+                    <p:column headerText="Odrediste">
+                        <center>
+                            <h:outputText value="#{d.odredisniAer.naziv}"/>, 
+                            <h:outputText value="#{d.odredisniAer.grad}"/>, 
+                            <h:outputText value="#{d.odredisniAer.zemlja}"/>
+                        </center>
+                    </p:column>
+                    <p:column headerText="Vreme">
+                        <center>
+                            <h:outputText value="#{d.datumPoletanja}">
+                                <f:convertDateTime pattern="HH:mm:ss" timeZone="Etc/GMT-2"/>
+                            </h:outputText>
+                        </center>
+                    </p:column>
+                </p:dataTable>
+                <br/><br/>
+               <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Index" action="#{userController.skokNaIndeks()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

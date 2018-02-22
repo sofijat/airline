@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Promeni gejt</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:dataTable value="#{userController.moji_letovi}" var="d" editable="true" editMode="cell" tableStyle="width:auto">                        
+                        <p:column headerText="Let">
+                            <p:outputLabel value="#{d.polazniAer.naziv}"/> -
+                            <p:outputLabel value="#{d.odredisniAer.naziv}"/>
+                        </p:column>
+                        <p:column headerText="Datum i vreme polaska">
+                            <h:outputText value="#{d.datumPoletanja}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Etc/GMT-2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Odlazni gejt">
+                            <h:outputText value="#{d.gejtOdlaz}"/>
+                        </p:column>
+                        <p:column headerText="Odredisni gejt">
+                            <h:outputText value="#{d.gejtDolaz}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Izmeni" action="#{controller.promenaGejt(d)}"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaPilot()}"/>
+                    </p:menuButton>
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pregled zahteva za registraciju</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h3>Zahtevi za registraciju</h3>
+                    <p:dataTable value="#{userController.zahtevi}" var="d" rendered="#{not empty userController.zahtevi}" tableStyle="width:auto" id="taba">
+                        <p:column headerText="Ime i prezime">
+                            <h:outputText value="#{d.idKori.ime}"/>&nbsp;<h:outputText value="#{d.idKori.prezime}"/>
+                        </p:column>
+                        <p:column headerText="Pol">
+                            <h:outputText value="#{d.idKori.pol}"/>
+                        </p:column>
+                        <p:column headerText="Datum rodjenja">
+                            <h:outputText value="#{d.idKori.datumRodjenja}">
+                                <f:convertDateTime pattern="yyyy-MM-dd" timeZone="Etc/GMT-2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Email">
+                            <h:outputText value="#{d.idKori.email}"/>
+                        </p:column>
+                        <p:column headerText="Kompanija">
+                            <h:outputText value="#{d.idKori.idKompani.naziv}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Prihvati" action="#{userController.odobri(d)}" update=":messages taba"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Odbij" action="#{userController.odbij(d)}" update=":messages taba"/> 
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <br/>
+                <p:messages id="messages" showDetail="true"/>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaAdmin()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

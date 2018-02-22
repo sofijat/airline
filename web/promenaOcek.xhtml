@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Promena ocekivanog vremena</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:panelGrid columns="2">
+                        Duzina preostalog puta (km):
+                        <p:inputNumber value="#{controller.duzinapreostala}" required="true" requiredMessage="Obavezno polje"/>
+                        Dosadasnja prosecna brzina (km/h):
+                        <p:inputNumber value="#{controller.prosecnabrzina}" required="true" requiredMessage="Obavezno polje"/>
+                    </p:panelGrid>
+                    <br/>
+                    <p:dataTable value="#{userController.moji_letovi}" var="d" editable="true" editMode="cell" tableStyle="width:auto" id="ocekiv">
+                        <p:ajax event="cellEdit" listener="#{controller.prinudnoSleteo(d)}" update=":messages"/>
+                        <p:column headerText="Let">
+                            <p:outputLabel value="#{d.polazniAer.naziv}"/> -
+                            <p:outputLabel value="#{d.odredisniAer.naziv}"/>
+                        </p:column>
+                        <p:column headerText="Datum i vreme polaska">
+                            <h:outputText value="#{d.datumPoletanja}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Etc/GMT-2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Ocekivano vreme">
+                            <h:outputText value="#{d.vremeOcekivano}"/>
+                        </p:column>
+                        <p:column>
+                            <p:commandButton value="Promeni" action="#{controller.promeniOcekivano(d)}" update=":messages ocekiv @form"/>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+                <p:messages id="messages" showDetail="true"/>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaPilot()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

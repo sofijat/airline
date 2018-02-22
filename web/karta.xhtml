@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid id="karta" columns="2">
+                        Ime: 
+                        <h:outputText value="#{controller.ime}"/>
+                        Prezime: 
+                        <h:outputText value="#{controller.prezime}"/>
+                        Let: 
+                        <h:column>
+                            <h:outputText value="#{controller.rezervisani.polazniAer.grad}"/>-<h:outputText value="#{controller.rezervisani.odredisniAer.grad}"/>
+                        </h:column>
+                        Datum i vreme: 
+                        <h:column>
+                            <h:outputText value="#{controller.rezervisani.datumPoletanja}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Etc/GMT-2"/>
+                            </h:outputText>
+                        </h:column>
+                        Broj pasosa:
+                        <h:outputText value="#{controller.brojpasosa}"/>
+                        Broj osoba: 
+                        <h:outputText value="#{controller.broj_osoba}"/>
+                    </h:panelGrid>
+                    <br/>
+                    <p:commandButton value="Stampaj" icon="ui-icon-print" type="button" style="display:block;margin-bottom: 20px">
+                        <p:printer target="karta"/>
+                    </p:commandButton>
+                </h:form>
+                <br/><br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Index" action="#{userController.skokNaIndeks()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

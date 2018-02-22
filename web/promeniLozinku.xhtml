@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Promena lozinke</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:panelGrid columns="2">
+                        Korisnicko ime:
+                        <p:inputText value="#{userController.logusername}" placeholder="Username" required="true" requiredMessage="Obavezno polje"/>
+                        Stara lozinka:
+                        <p:password value="#{userController.logpassword}" placeholder="Password" required="true" requiredMessage="Obavezno polje"/>
+                        Nova lozinka:
+                        <p:password value="#{userController.newPassword}" placeholder="New password" required="true" requiredMessage="Obavezno polje"/>
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton action="#{userController.promeniLozinku()}" value="Promeni" update=":messages"/>
+                    <br/>                 
+                </h:form>
+                <br/>
+                <p:messages id="messages" showDetail="true"/> 
+                <br/>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

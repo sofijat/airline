@@ -1,0 +1,44 @@
+
+
+html{
+    overflow-y: scroll;
+}
+
+body{
+    background: #e6f3ff;
+    font-family: sans-serif;
+    background-image: url("Slike/ee_plane_2.png"), url("Slike/cloud.png");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-attachment: fixed;
+    font-family: "Century Gothic";
+    margin-bottom: 40px;
+}
+
+.form{
+    font-family: "Century Gothic"
+}
+
+h1 {
+    font-family: "Century Gothic"
+}
+
+h2 {
+    font-family: "Century Gothic"
+}
+
+h3 {
+    font-family: "Century Gothic"
+}
+
+.button {
+    font-family: "Century Gothic"
+}
+
+#footer {
+    position : fixed;
+    bottom : 0;
+    left: 50%;
+    margin-left:-150px;
+    width:300px;
+}

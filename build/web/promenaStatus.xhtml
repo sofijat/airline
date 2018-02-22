@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Promena statusa</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h3>Promena statusa</h3>
+                    <p:dataTable value="#{userController.moji_letovi}" var="d" editable="true" editMode="cell" tableStyle="width:auto">
+                        <p:ajax event="cellEdit" listener="#{controller.noviStatusLeta(d)}" update=":messages"/>
+                        <p:column headerText="Let">
+                            <p:outputLabel value="#{d.polazniAer.naziv}"/> -
+                            <p:outputLabel value="#{d.odredisniAer.naziv}"/>
+                        </p:column>
+                        <p:column headerText="Datum i vreme polaska">
+                            <h:outputText value="#{d.datumPoletanja}">
+                                <f:convertDateTime pattern="yyyy-MM-dd HH:mm:ss" timeZone="Etc/GMT-2"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="Trenutni status*">
+                            <p:cellEditor>
+                                <f:facet name="output"><h:outputText value="#{d.status}"/></f:facet>
+                                <f:facet name="input">
+                                    <p:inputText value="#{controller.novistatus}"/>
+                                </f:facet>
+                            </p:cellEditor>
+                        </p:column> 
+                        
+                    </p:dataTable>
+                </h:form>
+                <br/><br/>
+                <span style="color: #cc0033">
+                    0-nije poleteo<br/>
+                    1-poleteo<br/>
+                    2-priprema za sletanje<br/>
+                    3-sleteo<br/>
+                    4-vanredna izmena<br/>
+                    5-otkazan<br/>
+                </span>
+                <p:messages id="messages" showDetail="true"/>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaPilot()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

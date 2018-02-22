@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Dodavanje avion</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h3>Dodaj novi primerak aviona</h3>
+                    <p:panelGrid columns="2">
+                        Proizvodjac:
+                        <p:column>
+                            <p:selectOneMenu value="#{controller.avProizvodjac}" id="proizv" required="true" requiredMessage="Obavezno polje">
+                                <p:ajax listener="#{controller.manjeTipova1()}" update="modela"/>
+                                <f:selectItems value="#{userController.proizvodjaci}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        Model:
+                        <p:column>
+                            <p:selectOneMenu value="#{controller.avModel}" id="modela" required="true" requiredMessage="Obavezno polje">
+                                <f:selectItems value="#{controller.tipovi}"/>
+                            </p:selectOneMenu>
+                        </p:column>
+                        Naziv:
+                        <p:column>
+                            <p:inputText value="#{controller.avNaziv}"/>
+                        </p:column>
+                        Slika:
+                        <p:column>
+                            <p:fileUpload mode="advanced" fileUploadListener="#{controller.dodajSliku()}" auto="true"
+                                          allowTypes="/(\.|\/)(jpe?g|png)$/" required="true" dragDropSupport="false"
+                                          requiredMessage="Obavezno dodati sliku" update=":messages"/>
+                        </p:column>
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton value="Dodaj" action="#{controller.dodajPrimerak()}" update=":messages @form"/>
+                </h:form>
+                <br/>
+                <p:messages id="messages" showDetail="true"/>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaAdmin()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

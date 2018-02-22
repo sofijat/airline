@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Rezervacija</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h3>Rezervacija</h3>
+                    <p:panelGrid columns="2">
+                        Ime:
+                        <p:inputText value="#{controller.ime}" required="true" requiredMessage="Obavezno polje"/>
+                        Prezime:
+                        <p:inputText value="#{controller.prezime}" required="true" requiredMessage="Obavezno polje"/>
+                        Broj pasosa:
+                        <p:inputText value="#{controller.brojpasosa}" required="true" requiredMessage="Obavezno polje"/>
+                        Broj kartice:
+                        <p:inputText value="#{controller.brojkartice}" placeholder="16-digit number" validatorMessage="Broj kartice mora da sadrzi 16 cifara" required="true" requiredMessage="Obavezno polje">
+                            <f:validateRegex pattern="\d{16}" />
+                            <p:ajax partialSubmit="@this" update=":messages"/>
+                        </p:inputText>
+                    </p:panelGrid>
+                    <br/>
+                    <p:commandButton value="Rezervisi" action="#{controller.rezevisi()}" update=":messages @form"/>
+                </h:form>
+                
+                <br/>
+                
+                <p:messages id="messages" showDetail="true"/>
+                <br/><br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Index" action="#{userController.skokNaIndeks()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

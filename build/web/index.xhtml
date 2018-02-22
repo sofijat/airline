@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Index</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <p:panelGrid columns="2">
+                        Korisnicko ime:
+                        <p:inputText value="#{userController.logusername}" placeholder="Username" required="true" requiredMessage="Obavezno polje"/>
+                        Lozinka:
+                        <p:password value="#{userController.logpassword}" placeholder="Password" required="true" requiredMessage="Obavezno polje">
+                            <f:validateLength minimum="8" maximum="10"/>
+                        </p:password>
+                        <p:link value="Promeni lozinku" outcome="promeniLozinku.xhtml"/>
+                        <p:commandButton value="Login" action="#{userController.logIn()}" update=":messages @form"/>
+                    </p:panelGrid>
+                    <br/>
+                    Nemate nalog? 
+                    <p:link value="Registrujte se" outcome="registracija.xhtml" /> ili nastavite kao
+                    <p:link value="gost" outcome="gost.xhtml"/>. <br/>
+                </h:form>
+                <br/>
+                <p:messages id="messages" showDetail="true"/>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

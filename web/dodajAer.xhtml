@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Dodaj aerodrom</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/template.xhtml">
+            <ui:define name="content">
+                <p:accordionPanel style="width: 800px">
+                    <p:tab title="Dodaj aerodrom">
+                        <h:form>
+                            <p:panelGrid columns="2">
+                                Iata:
+                                <p:inputText value="#{controller.aiata}" required="true" requiredMessage="Obavezno polje" placeholder="Iata"/>
+                                Naziv:
+                                <p:inputText value="#{controller.anaziv}" required="true" requiredMessage="Obavezno polje" placeholder="Name"/>
+                                Zemlja:
+                                <p:inputText value="#{controller.azemlja}" required="true" requiredMessage="Obavezno polje" placeholder="Country"/>
+                                Broj pisti:
+                                <p:inputNumber value="#{controller.abrojpisti}" required="true" requiredMessage="Obavezno polje" placeholder="Runway number"/>
+                                Grad:
+                                <p:inputText value="#{controller.agrad}" required="true" requiredMessage="Obavezno polje" placeholder="City"/>
+                            </p:panelGrid>
+                            <br/>
+                            <p:commandButton value="Dodaj" action="#{controller.dodajAerodrom()}" update=":messages @form"/>
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="Dodaj aerodromu terminal" id="formaa">
+                        <h:form>
+                            <p:inputText value="#{controller.aterminal}" required="true" requiredMessage="Obavezno polje" placeholder="Terminal"/><br/>
+                            <br/>
+                            <p:commandButton value="Dodaj" action="#{controller.dodajTerminal()}" update=":messages @form"/>
+                        </h:form>
+                    </p:tab>
+                    <p:tab title="Dodaj terminalu gejt" id="formab">
+                        <h:form>
+                            <p:inputText value="#{controller.agejt}" required="true" requiredMessage="Obavezno polje" placeholder="Gate"/><br/>
+                            <br/>
+                            <p:commandButton value="Dodaj" action="#{controller.dodajGejt()}" update=":messages @form"/>
+                        </h:form>
+                    </p:tab>
+                </p:accordionPanel>
+                <p:messages id="messages" showDetail="true"/>
+                <br/>
+                <br/>
+                <h:form id="loge">
+                    <p:menuButton value="Nazad">
+                        <p:menuitem value="Logout" action="#{userController.logOut()}"/>
+                        <p:menuitem value="Meni" action="#{userController.skokNaAdmin()}"/>
+                    </p:menuButton>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
